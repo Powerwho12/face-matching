@@ -5,8 +5,17 @@ import io
 from app.model import get_embedding
 from app.database import load_database
 from app.utils import find_top_k
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI()
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 모든 도메인 허용
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 celeb_db = load_database()
 

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>닮은 연예인 찾기</title>
+</head>
+<body>
+  <h1>닮은 연예인 찾기</h1>
+
+  <input type="file" id="file" />
+  <button onclick="upload()">찾기</button>
+
+  <div id="loading" style="display:none;">분석중...</div>
+  <pre id="result"></pre>
+
+  <script>
+    async function upload() {
+      const file = document.getElementById("file").files[0];
+      const formData = new FormData();
+      formData.append("file", file);
+
+      document.getElementById("loading").style.display = "block";
+
+      const res = await fetch("http://localhost:8000/predict", {
+        method: "POST",
+        body: formData
+      });
+
+      const data = await res.json();
+
+      document.getElementById("loading").style.display = "none";
+
+      document.getElementById("result").innerText =
+        data.results.map(r =>
+          `${r.name} - ${(r.similarity * 100).toFixed(1)}%`
+        ).join("\n");
+    }
+  </script>
+</body>
+</html>
