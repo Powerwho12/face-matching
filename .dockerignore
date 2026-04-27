@@ -1,4 +1,5 @@
-data/
+data/*
+!data/embeddings.pkl
 __pycache__/
 *.pyc
 .git
