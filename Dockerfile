@@ -1,3 +1,4 @@
+
 FROM python:3.9-slim
 
 WORKDIR /app
@@ -8,5 +9,6 @@ RUN pip install --no-cache-dir torch torchvision --index-url https://download.py
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app ./app
+COPY data ./data
 
 CMD ["sh", "-c", "uvicorn app.main:app --host 0.0.0.0 --port $PORT"]
